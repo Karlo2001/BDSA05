@@ -1,3 +1,5 @@
+[![build and test](https://github.com/Karlo2001/BDSA05/actions/workflows/build-and-test.yml/badge.svg)](https://github.com/Karlo2001/BDSA05/actions/workflows/build-and-test.yml)
+
 # Assignment #5
 
 ## C#: Gilded Rose Refactoring Kata
