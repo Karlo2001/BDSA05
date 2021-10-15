@@ -6,6 +6,13 @@ namespace GildedRose.Tests
 {
     public class TestAssemblyTests
     {
+        private readonly Program _program;
+
+        public TestAssemblyTests()
+        {
+            _program = new Program();
+        }
+
         [Fact]
         public void TestTheTruth()
         {
@@ -13,36 +20,24 @@ namespace GildedRose.Tests
         }
 
         [Fact]
-        public void ItemsAfterOneUpdateReturnsCorrectValues()
+        public void UpdateQuality_GivenOneDayPasses_ReturnsCorrectItemStates()
         {
-            var items = new List<Item>() {    new Item {Name = "+5 Dexterity Vest", SellIn = 10, Quality = 20},
-                                              new Item {Name = "Aged Brie", SellIn = 2, Quality = 0},
-                                              new Item {Name = "Elixir of the Mongoose", SellIn = 5, Quality = 7},
-                                              new Item {Name = "Sulfuras, Hand of Ragnaros", SellIn = 0, Quality = 80},
-                                              new Item
-                                                  {
-                                                      Name = "Backstage passes to a TAFKAL80ETC concert",
-                                                      SellIn = 15,
-                                                      Quality = 20
-                                                  },
-                                              new Item {Name = "Conjured Mana Cake", SellIn = 2, Quality = 6}};
-
-            var checkList = new List<Item>() {new Item {Name = "+5 Dexterity Vest", SellIn = 9, Quality = 19},
-                                              new Item {Name = "Aged Brie", SellIn = 1, Quality = 1},
-                                              new Item {Name = "Elixir of the Mongoose", SellIn = 4, Quality = 6},
-                                              new Item {Name = "Sulfuras, Hand of Ragnaros", SellIn = 0, Quality = 80},
-                                              new Item
+            var items = _program.Items;
+            var checkList = new List<Item> {  new() {Name = "+5 Dexterity Vest", SellIn = 9, Quality = 19},
+                                              new() {Name = "Aged Brie", SellIn = 1, Quality = 1},
+                                              new() {Name = "Elixir of the Mongoose", SellIn = 4, Quality = 6},
+                                              new() {Name = "Sulfuras, Hand of Ragnaros", SellIn = 0, Quality = 80},
+                                              new()
                                                   {
                                                       Name = "Backstage passes to a TAFKAL80ETC concert",
                                                       SellIn = 14,
                                                       Quality = 21
                                                   },
-                                              new Item {Name = "Conjured Mana Cake", SellIn = 1, Quality = 4}};
+                                              new() {Name = "Conjured Mana Cake", SellIn = 1, Quality = 4}};
 
-            Program.SetItems(items);
-            Program.UpdateQuality();
+            _program.UpdateQuality();
             var counter = 0;
-            foreach (var item in Program.Items)
+            foreach (var item in items)
             {
                 Assert.Equal(checkList[counter].Name, item.Name);
                 Assert.Equal(checkList[counter].SellIn, item.SellIn);
@@ -52,38 +47,26 @@ namespace GildedRose.Tests
         }
 
         [Fact]
-        public void ItemsQualityAfterAllSellInIsUnderZeroReturnRightQuality()
+        public void UpdateQuality_GivenAllSellInBecomesNegative_ReturnsCorrectItemStates()
         {
-            var items = new List<Item>() {    new Item {Name = "+5 Dexterity Vest", SellIn = 10, Quality = 20},
-                                              new Item {Name = "Aged Brie", SellIn = 2, Quality = 0},
-                                              new Item {Name = "Elixir of the Mongoose", SellIn = 5, Quality = 7},
-                                              new Item {Name = "Sulfuras, Hand of Ragnaros", SellIn = 0, Quality = 80},
-                                              new Item
+            var items = _program.Items;
+            var checkList = new List<Item> {new() {Name = "+5 Dexterity Vest", SellIn = -2, Quality = 6},
+                                              new() {Name = "Aged Brie", SellIn = -10, Quality = 22},
+                                              new() {Name = "Elixir of the Mongoose", SellIn = -7, Quality = 0},
+                                              new() {Name = "Sulfuras, Hand of Ragnaros", SellIn = 0, Quality = 80},
+                                              new()
                                                   {
                                                       Name = "Backstage passes to a TAFKAL80ETC concert",
-                                                      SellIn = 15,
-                                                      Quality = 20
+                                                      SellIn = 3,
+                                                      Quality = 41
                                                   },
-                                              new Item {Name = "Conjured Mana Cake", SellIn = 2, Quality = 6}};
-            
-            var checkList = new List<Item>() {new Item {Name = "+5 Dexterity Vest", SellIn = 0, Quality = 19},
-                                              new Item {Name = "Aged Brie", SellIn = 0, Quality = 1},
-                                              new Item {Name = "Elixir of the Mongoose", SellIn = 0, Quality = 6},
-                                              new Item {Name = "Sulfuras, Hand of Ragnaros", SellIn = 0, Quality = 80},
-                                              new Item
-                                                  {
-                                                      Name = "Backstage passes to a TAFKAL80ETC concert",
-                                                      SellIn = 0,
-                                                      Quality = 21
-                                                  },
-                                              new Item {Name = "Conjured Mana Cake", SellIn = 0, Quality = 4}};
-            Program.SetItems(items);
-            for (int i = 0; i < 20; i++)
+                                              new() {Name = "Conjured Mana Cake", SellIn = -10, Quality = 0}};
+            for (var i = 0; i < 12; i++)
             {
-                Program.UpdateQuality();
+                _program.UpdateQuality();
             }
             var counter = 0;
-            foreach (var item in Program.Items)
+            foreach (var item in items)
             {
                 Assert.Equal(checkList[counter].Name, item.Name);
                 Assert.Equal(checkList[counter].SellIn, item.SellIn);
