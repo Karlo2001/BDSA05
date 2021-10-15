@@ -1,17 +1,15 @@
 ﻿using System.Collections.Generic;
+using System;
 
 namespace GildedRose.Console
 {
-    class Program
+    public class Program
     {
-        IList<Item> Items;
+        public static IList<Item> Items;
         static void Main(string[] args)
         {
             System.Console.WriteLine("OMGHAI!");
-
-            var app = new Program()
-                          {
-                              Items = new List<Item>
+            var itemsList = new List<Item>
                                           {
                                               new Item {Name = "+5 Dexterity Vest", SellIn = 10, Quality = 20},
                                               new Item {Name = "Aged Brie", SellIn = 2, Quality = 0},
@@ -24,17 +22,29 @@ namespace GildedRose.Console
                                                       Quality = 20
                                                   },
                                               new Item {Name = "Conjured Mana Cake", SellIn = 3, Quality = 6}
-                                          }
+                                          };
 
+            /*var app = new Program()
+                          {
                           };
-
-            app.UpdateQuality();
+            */
+            Program.Items = itemsList;
+            foreach (var item in Program.Items)
+            {
+                System.Console.WriteLine(item.Name);
+            }
+            Program.UpdateQuality();
 
             System.Console.ReadKey();
 
         }
 
-        public void UpdateQuality()
+        public static void SetItems(List<Item> items)
+        {
+            Items = new List<Item>(items);
+        }
+
+        public static IList<Item> UpdateQuality()
         {
             for (var i = 0; i < Items.Count; i++)
             {
@@ -44,7 +54,14 @@ namespace GildedRose.Console
                     {
                         if (Items[i].Name != "Sulfuras, Hand of Ragnaros")
                         {
-                            Items[i].Quality = Items[i].Quality - 1;
+                            if (Items[i].Name.StartsWith("Conjured"))
+                            {
+                                Items[i].Quality = Items[i].Quality - 2;
+                            }
+                            else
+                            {
+                                Items[i].Quality = Items[i].Quality - 1;
+                            }
                         }
                     }
                 }
@@ -109,7 +126,6 @@ namespace GildedRose.Console
                 }
             }
         }
-
     }
 
     public class Item
