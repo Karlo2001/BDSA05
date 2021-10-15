@@ -74,5 +74,26 @@ namespace GildedRose.Tests
                 counter++;
             }          
         }
+        
+        [Fact]
+        public void UpdateQuality_GivenConcertSellInHitsZero_ReturnsCorrectQuality()
+        {
+            var items = _program.Items;
+            for (var i = 0; i < 16; i++)
+            {
+                _program.UpdateQuality();
+            }
+
+            var concertItem = new Item()
+            {
+                Name = "Backstage passes to a TAFKAL80ETC concert",
+                SellIn = -1,
+                Quality = 0
+            };
+            var actualConcert = items[4];
+            Assert.Equal(concertItem.Name, actualConcert.Name);
+            Assert.Equal(concertItem.SellIn, actualConcert.SellIn);
+            Assert.Equal(concertItem.Quality, actualConcert.Quality);
+        }
     }
 }
