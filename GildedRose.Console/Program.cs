@@ -43,8 +43,7 @@ namespace GildedRose.Console
         {
             Items = new List<Item>(items);
         }
-
-        public static IList<Item> UpdateQuality()
+        public static void UpdateQuality()
         {
             for (var i = 0; i < Items.Count; i++)
             {
