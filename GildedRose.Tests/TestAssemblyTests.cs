@@ -1,7 +1,7 @@
 ﻿using Xunit;
-using GildedRose;
 using System.Collections.Generic;
-
+using GildedRose.Items;
+using static GildedRose.QualityChangeStrategies;
 namespace GildedRose.Tests
 {
     public class TestAssemblyTests
@@ -25,37 +25,39 @@ namespace GildedRose.Tests
             var items = _program.Items;
             var checkList = new List<Item>
             {
-                new() {Name = "+5 Dexterity Vest", SellIn = 9, Quality = 19},
-                new() {Name = "Aged Brie", SellIn = 1, Quality = 1},
-                new() {Name = "Elixir of the Mongoose", SellIn = 4, Quality = 6},
-                new() {Name = "Sulfuras, Hand of Ragnaros", SellIn = 0, Quality = 80},
-                new() {Name = "Sulfuras, Hand of Ragnaros", SellIn = -1, Quality = 80},
+                new() {QualityChange = NormalQuality, Name = "+5 Dexterity Vest", SellIn = 9, Quality = 19},
+                new() {QualityChange = AgedBrie, Name = "Aged Brie", SellIn = 1, Quality = 1},
+                new() {QualityChange = NormalQuality, Name = "Elixir of the Mongoose", SellIn = 4, Quality = 6},
+                new() {QualityChange = Legendary, Degrades = false, Name = "Sulfuras, Hand of Ragnaros", SellIn = 0, Quality = 80},
+                new() {QualityChange = Legendary, Degrades = false, Name = "Sulfuras, Hand of Ragnaros", SellIn = -1, Quality = 80},
                 new()
                 {
+                    QualityChange = BackstagePass,
                     Name = "Backstage passes to a TAFKAL80ETC concert",
                     SellIn = 14,
                     Quality = 21
                 },
                 new()
                 {
+                    QualityChange = BackstagePass,
                     Name = "Backstage passes to a TAFKAL80ETC concert",
                     SellIn = 9,
                     Quality = 50
                 },
                 new()
                 {
+                    QualityChange = BackstagePass,
                     Name = "Backstage passes to a TAFKAL80ETC concert",
                     SellIn = 4,
                     Quality = 50
                 },
-
-                new() {Name = "Conjured Mana Cake", SellIn = 2, Quality = 4}
+                new() {QualityChange = Conjured, Name = "Conjured Mana Cake", SellIn = 2, Quality = 4}
             };
-
-            _program.UpdateQuality();
+            
             var counter = 0;
             foreach (var item in items)
             {
+                item.Update();
                 Assert.Equal(checkList[counter].Name, item.Name);
                 Assert.Equal(checkList[counter].SellIn, item.SellIn);
                 Assert.Equal(checkList[counter].Quality, item.Quality);
@@ -96,15 +98,17 @@ namespace GildedRose.Tests
 
                 new() {Name = "Conjured Mana Cake", SellIn = -9, Quality = 0}
             };
-            
-            
-            for (var i = 0; i < 12; i++)
+            for (int i = 0; i < 12; i++)
             {
-                _program.UpdateQuality();
+                foreach (Item item in items)
+                {
+                    item.Update();
+                }
             }
             var counter = 0;
             foreach (var item in items)
             {
+                
                 Assert.Equal(checkList[counter].Name, item.Name);
                 Assert.Equal(checkList[counter].SellIn, item.SellIn);
                 Assert.Equal(checkList[counter].Quality, item.Quality);
@@ -118,7 +122,10 @@ namespace GildedRose.Tests
             var items = _program.Items;
             for (var i = 0; i < 16; i++)
             {
-                _program.UpdateQuality();
+                foreach (Item item in items)
+                {
+                    item.Update();
+                }
             }
 
             var concertItem = new Item()
