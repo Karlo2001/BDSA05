@@ -1,5 +1,5 @@
 ﻿using Xunit;
-using GildedRose.Console;
+using GildedRose;
 using System.Collections.Generic;
 
 namespace GildedRose.Tests
