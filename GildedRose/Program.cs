@@ -9,36 +9,56 @@ namespace GildedRose
 
         public Program()
         {
-            Items = new List<Item> {
+            Items = new List<Item>
+            {
                 new() {Name = "+5 Dexterity Vest", SellIn = 10, Quality = 20},
                 new() {Name = "Aged Brie", SellIn = 2, Quality = 0},
                 new() {Name = "Elixir of the Mongoose", SellIn = 5, Quality = 7},
                 new() {Name = "Sulfuras, Hand of Ragnaros", SellIn = 0, Quality = 80},
+                new() {Name = "Sulfuras, Hand of Ragnaros", SellIn = -1, Quality = 80},
                 new()
                 {
                     Name = "Backstage passes to a TAFKAL80ETC concert",
                     SellIn = 15,
                     Quality = 20
                 },
-                new() {Name = "Conjured Mana Cake", SellIn = 2, Quality = 6}
+                new()
+                {
+                    Name = "Backstage passes to a TAFKAL80ETC concert",
+                    SellIn = 10,
+                    Quality = 49
+                },
+                new()
+                {
+                    Name = "Backstage passes to a TAFKAL80ETC concert",
+                    SellIn = 5,
+                    Quality = 49
+                },
+
+                new() {Name = "Conjured Mana Cake", SellIn = 3, Quality = 6}
             };
         }
         
         static void Main(string[] args)
         {
-            var program = new Program();
-            
-            for (var i = 0; i < 12; i++)
-            {
-                program.UpdateQuality();
-                foreach (var item in program.Items)
-                {
-                    System.Console.Write($"{item.Name}: {item.Quality} ");
-                }
+            Console.WriteLine("OMGHAI!");
 
-                System.Console.WriteLine();
+            var program = new Program();
+
+            for (var i = 0; i < 31; i++)
+            {
+                Console.WriteLine("-------- day " + i + " --------");
+                Console.WriteLine("name, sellIn, quality");
+                for (var j = 0; j < program.Items.Count; j++)
+                {
+                    Console.WriteLine(program.Items[j].Name + ", " + program.Items[j].SellIn + ", " + program.Items[j].Quality);
+                }
+                Console.WriteLine("");
+                program.UpdateQuality();
             }
+
         }
+
         
         public void UpdateQuality()
         {
