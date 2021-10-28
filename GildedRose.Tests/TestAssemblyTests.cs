@@ -20,14 +20,18 @@ namespace GildedRose.Tests
         }
 
         [Fact]
-        public void UpdateQuality_GivenOneDayPasses_ReturnsCorrectItemStates()
+
+        public void Update_GivenOneDayPasses_ReturnsCorrectItemStates()
+
         {
             var items = _program.Items;
             var checkList = new List<Item>
             {
-                new() {QualityChange = NormalQuality, Name = "+5 Dexterity Vest", SellIn = 9, Quality = 19},
+
+                new() {Name = "+5 Dexterity Vest", SellIn = 9, Quality = 19},
                 new() {QualityChange = AgedBrie, Name = "Aged Brie", SellIn = 1, Quality = 1},
-                new() {QualityChange = NormalQuality, Name = "Elixir of the Mongoose", SellIn = 4, Quality = 6},
+                new() {Name = "Elixir of the Mongoose", SellIn = 4, Quality = 6},
+
                 new() {QualityChange = Legendary, Degrades = false, Name = "Sulfuras, Hand of Ragnaros", SellIn = 0, Quality = 80},
                 new() {QualityChange = Legendary, Degrades = false, Name = "Sulfuras, Hand of Ragnaros", SellIn = -1, Quality = 80},
                 new()
@@ -66,7 +70,8 @@ namespace GildedRose.Tests
         }
 
         [Fact]
-        public void UpdateQuality_GivenAllSellInBecomesNegative_ReturnsCorrectItemStates()
+        public void Update_GivenAllSellInBecomesNegative_ReturnsCorrectItemStates()
+
         {
             var items = _program.Items;
 
@@ -117,7 +122,9 @@ namespace GildedRose.Tests
         }
         
         [Fact]
-        public void UpdateQuality_GivenConcertSellInHitsZero_ReturnsCorrectQuality()
+
+        public void Update_GivenConcertSellInHitsZero_ReturnsCorrectQuality()
+
         {
             var items = _program.Items;
             for (var i = 0; i < 16; i++)
