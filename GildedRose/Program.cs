@@ -14,6 +14,7 @@ namespace GildedRose
             
             Items = new List<Item>
             {
+
                 new() {Name = "+5 Dexterity Vest", SellIn = 10, Quality = 20},
                 new() {QualityChange = AgedBrie, Name = "Aged Brie", SellIn = 2, Quality = 0},
                 new() {Name = "Elixir of the Mongoose", SellIn = 5, Quality = 7},
