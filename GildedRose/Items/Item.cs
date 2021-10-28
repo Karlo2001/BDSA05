@@ -1,4 +1,5 @@
 using System;
+using static GildedRose.QualityChangeStrategies;
 
 namespace GildedRose.Items
 {
@@ -8,7 +9,7 @@ namespace GildedRose.Items
         public int SellIn { get; set; }
         public int Quality { get; set; }
         
-        public Func<int, int, int> QualityChange { private get; init; }
+        public Func<int, int, int> QualityChange { private get; init; } = NormalQuality;
         public bool Degrades { private get; init; } = true;
 
         public void Update()
